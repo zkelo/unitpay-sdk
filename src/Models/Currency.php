@@ -183,13 +183,18 @@ class Currency
     const JPY = 'JPY';
 
     /**
-     * Currency name
+     * Currency code
      *
      * @var string
      */
     protected $code = '';
 
-    protected $description = '';
+    /**
+     * Currency name
+     *
+     * @var string
+     */
+    protected $name = '';
 
     /**
      * Returns currencies list
@@ -261,6 +266,9 @@ class Currency
             throw new InvalidArgumentException('This currency is not supported');
         }
 
+        $list = static::list();
+
         $this->code = $code;
+        $this->name = $list[$this->code];
     }
 }
