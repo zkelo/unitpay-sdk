@@ -1,0 +1,27 @@
+{
+    "name": "zkelo/unitpay-php-sdk",
+    "description": "Unitpay PHP SDK",
+    "keywords": [
+        "unitpay",
+        "php",
+        "sdk"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aleksandr Riabov",
+            "email": "ar161ru@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "zkelo\\Unitpay\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.1",
+        "symfony/http-client": "^5.2"
+    }
+}
