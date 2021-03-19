@@ -5,9 +5,9 @@ namespace zkelo\Unitpay;
 use InvalidArgumentException;
 use Symfony\Component\HttpClient\{
     HttpClient,
-    HttpClientInterface,
-    ResponseInterface
+    HttpClientInterface
 };
+use Symfony\Contracts\HttpClient\ResponseInterface;
 use zkelo\Unitpay\Exceptions\{
     ApiException,
     InvalidConfigException
@@ -23,34 +23,6 @@ use zkelo\Unitpay\Models\Currency;
  */
 class Unitpay
 {
-    /**
-     * Метод входящего запроса: CHECK
-     *
-     * Проверка возможности оказания услуг абоненту. Запрос выполняется до выполнения оплаты
-     */
-    const REQUEST_METHOD_CHECK = 'check';
-
-    /**
-     * Метод входящего запроса: PAY
-     *
-     * Уведомление об успешном платеже
-     */
-    const REQUEST_METHOD_PAY = 'pay';
-
-    /**
-     * Метод входящего запроса: PREAUTH
-     *
-     * Уведомление о платеже с преавторизацией, когда средства были успешно заблокированы
-     */
-    const REQUEST_METHOD_PREAUTH = 'preAuth';
-
-    /**
-     * Метод входящего запроса: ERROR
-     *
-     * Ошибка платежа на любой из этапов. Если ошибка вызвана пустым или ошибочным ответом сервера партнёра, то запрос не будет отправлен. Следует учесть, что данный статус не конечный и возможны ситуации, когда после запроса ERROR может последовать запрос PAY
-     */
-    const REQUEST_METHOD_ERROR = 'error';
-
     /**
      * Разделитель параметров в подписи запроса
      */
@@ -156,18 +128,6 @@ class Unitpay
      * @var integer
      */
     protected $projectId = 0;
-
-    /**
-     * Список возможных методов при входящем запросе от Unitpay
-     *
-     * @var array
-     */
-    protected $allowedRequestMethods = [
-        self::REQUEST_METHOD_CHECK,
-        self::REQUEST_METHOD_ERROR,
-        self::REQUEST_METHOD_PAY,
-        self::REQUEST_METHOD_PREAUTH
-    ];
 
     /**
      * Доступные способы оплаты
