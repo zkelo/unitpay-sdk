@@ -3,9 +3,11 @@
 namespace zkelo\Unitpay;
 
 use InvalidArgumentException;
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Contracts\HttpClient\ResponseInterface;
+use Symfony\Component\HttpClient\{
+    HttpClient,
+    HttpClientInterface,
+    ResponseInterface
+};
 use zkelo\Unitpay\Exceptions\{
     ApiException,
     InvalidConfigException
@@ -18,7 +20,7 @@ use zkelo\Unitpay\Exceptions\{
  * @version 1.0.0
  * @see https://help.unitpay.ru Документация
  */
-class SDK
+class Unitpay
 {
     /**
      * Метод входящего запроса: CHECK
