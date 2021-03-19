@@ -102,7 +102,7 @@ class Payment
     }
 
     /**
-     * Constructs a payment
+     * Constructs a payment model
      *
      * @param string $method Payment method name
      * @return void
