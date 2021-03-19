@@ -95,7 +95,7 @@ class Payment
      * @param string $method Method name
      * @return boolean `true` if method is supported or `false` if not
      */
-    public static function isSupported(string $method): bool
+    public static function isMethodSupported(string $method): bool
     {
         $methods = array_keys(static::methods());
         return in_array($method, $methods);
@@ -110,7 +110,7 @@ class Payment
      */
     public function __construct(string $method)
     {
-        if (!static::isSupported($method)) {
+        if (!static::isMethodSupported($method)) {
             throw new InvalidArgumentException('This payment method is not supported');
         }
 
