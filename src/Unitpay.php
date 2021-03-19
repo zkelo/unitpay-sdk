@@ -113,18 +113,6 @@ class Unitpay
     private $secretKey = '';
 
     /**
-     * Список IP-адресов серверов Unitpay
-     *
-     * @var string[]
-     */
-    private $ips = [
-        '31.186.100.49',
-        '178.132.203.105',
-        '52.29.152.23',
-        '52.19.56.234'
-    ];
-
-    /**
      * Список доступных доменов
      *
      * @var array
@@ -290,20 +278,6 @@ class Unitpay
     }
 
     /**
-     * Проверка IP-адреса по списку IP-адресов Unitpay
-     *
-     * @param string $ip IP-адрес
-     * @return boolean `true`, если IP корректный и `false`, если нет
-     */
-    public function isIpValid(string $ip): bool
-    {
-        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            return false;
-        }
-        return in_array($ip, $this->ips);
-    }
-
-    /**
      * Инициализирует платёж
      *
      * @param string $method Способ оплаты
@@ -360,18 +334,6 @@ class Unitpay
         $response = $this->api('initPayment', $params);
 
         return $response['paymentId'];
-    }
-
-    /**
-     * Проверяет запрос на корректность
-     *
-     * @param array $data Данные запроса
-     * @return boolean `true`, если запрос корректный и `false`, если нет
-     */
-    public function validateRequest(array $data): bool
-    {
-        // TODO Метод для проверки входящих запросов от Unitpay
-        return false;
     }
 
     /**
