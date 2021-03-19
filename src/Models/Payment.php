@@ -66,7 +66,7 @@ class Payment
      *
      * @var string
      */
-    protected $method = '';
+    protected $method;
 
     /**
      * Returns supported payment methods list

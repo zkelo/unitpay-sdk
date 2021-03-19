@@ -45,7 +45,7 @@ class Request implements RequestInterface
      *
      * @var string
      */
-    protected $method = '';
+    protected $method;
 
     /**
      * Список IP-адресов серверов Unitpay

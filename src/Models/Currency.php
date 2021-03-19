@@ -186,14 +186,14 @@ class Currency
      *
      * @var string
      */
-    protected $code = '';
+    protected $code;
 
     /**
      * Currency name
      *
      * @var string
      */
-    protected $name = '';
+    protected $name;
 
     /**
      * Returns currencies list
