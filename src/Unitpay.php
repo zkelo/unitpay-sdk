@@ -12,6 +12,7 @@ use zkelo\Unitpay\Exceptions\{
     ApiException,
     InvalidConfigException
 };
+use zkelo\Unitpay\Models\Currency;
 
 /**
  * Unitpay SDK
@@ -362,8 +363,7 @@ class Unitpay
         $params['desc'] = $description;
 
         if (!empty($currency)) {
-            $availableCurrencies = array_keys($this->availableCurrencies);
-            if (!in_array($currency, $availableCurrencies)) {
+            if (!Currency::isSupported($currency)) {
                 throw new InvalidArgumentException('Указанная валюта не поддерживается');
             }
         }
