@@ -48,6 +48,18 @@ class Request implements RequestInterface
     protected $method = '';
 
     /**
+     * Список IP-адресов серверов Unitpay
+     *
+     * @var string[]
+     */
+    protected $allowedIps = [
+        '31.186.100.49',
+        '178.132.203.105',
+        '52.29.152.23',
+        '52.19.56.234'
+    ];
+
+    /**
      * Returns supported request methods
      *
      * @return array
@@ -72,6 +84,20 @@ class Request implements RequestInterface
         }
 
         $this->method = $method;
+    }
+
+    /**
+     * Checks a client IP by whitelist
+     *
+     * @param string $ip IP
+     * @return boolean `true` if IP is allowed or `false` if not
+     */
+    public function isIpValid(string $ip): bool
+    {
+        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            return false;
+        }
+        return in_array($ip, $this->allowedIps);
     }
 
     /**
@@ -104,5 +130,21 @@ class Request implements RequestInterface
     public function hasFailed(): bool
     {
         return $this->method === static::METHOD_ERROR;
+    }
+
+    /**
+     * Validates request
+     *
+     * @param string $ip Client IP
+     * @param array $data Request data
+     * @return boolean `true` if request is valid or `false` if not
+     */
+    public function validate(string $ip, array $data): bool
+    {
+        if (!$this->isIpValid($ip)) {
+            return false;
+        }
+        // TODO Написать код проверки запроса
+        return true;
     }
 }
