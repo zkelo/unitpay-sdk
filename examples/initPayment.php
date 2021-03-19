@@ -1,10 +1,10 @@
 <?php
 
-use zkelo\Unitpay\SDK;
+use zkelo\Unitpay\Unitpay;
 
 require_once __DIR__ . '/sdk.php';
 
-$method = SDK::PAYMENT_METHOD_CARD;
+$method = Unitpay::PAYMENT_METHOD_CARD;
 $account = 'test';
 $sum = 15;
 $description = 'Пример использования метода SDK initPayment()';
