@@ -12,12 +12,12 @@ class Locale
     /**
      * Язык: Английский
      */
-    const LOCALE_ENGLISH = 'en';
+    const ENGLISH = 'en';
 
     /**
      * Язык: Русский
      */
-    const LOCALE_RUSSIAN = 'ru';
+    const RUSSIAN = 'ru';
 
     /**
      * Returns locales list
@@ -27,8 +27,8 @@ class Locale
     public static function list(): array
     {
         return [
-            static::LOCALE_ENGLISH,
-            static::LOCALE_RUSSIAN
+            static::ENGLISH,
+            static::RUSSIAN
         ];
     }
 
