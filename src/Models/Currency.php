@@ -7,7 +7,6 @@ use InvalidArgumentException;
 /**
  * Currency model
  *
- * @author Aleksandr Riabov <ar161ru@gmail.com>
  * @version 1.0.0
  */
 class Currency
