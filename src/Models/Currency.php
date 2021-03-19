@@ -263,14 +263,4 @@ class Currency
 
         $this->code = $code;
     }
-
-    /**
-     * Makes new model by currency name
-     *
-     * @param string $name
-     * @return void
-     */
-    public static function make(string $name)
-    {
-    }
 }
