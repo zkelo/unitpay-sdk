@@ -2,6 +2,8 @@
 
 namespace zkelo\Unitpay\Interfaces;
 
+use InvalidArgumentException;
+
 /**
  * Interface for request models
  *
@@ -14,6 +16,7 @@ interface RequestInterface
      *
      * @param string $method Request method name
      * @return void
+     * @throws InvalidArgumentException If specified request method is not supported
      */
     public function __construct(string $method);
 
