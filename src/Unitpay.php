@@ -12,7 +12,11 @@ use zkelo\Unitpay\Exceptions\{
     ApiException,
     InvalidConfigException
 };
-use zkelo\Unitpay\Models\Currency;
+use zkelo\Unitpay\Models\{
+    Currency,
+    Payment,
+    Request
+};
 
 /**
  * Unitpay SDK
@@ -27,56 +31,6 @@ class Unitpay
      * Разделитель параметров в подписи запроса
      */
     const SIGNATURE_DELIMITER = '{up}';
-
-    /**
-     * Способ оплаты: Мобильные телефоны
-     */
-    const PAYMENT_METHOD_MOBILE = 'mc';
-
-    /**
-     * Способ оплаты: Банковские карты
-     */
-    const PAYMENT_METHOD_CARD = 'card';
-
-    /**
-     * Способ оплаты: Кошелёк Webmoney Z _(долларовый кошелёк)_
-     */
-    const PAYMENT_METHOD_WEBMONEY_Z = 'webmoney';
-
-    /**
-     * Способ оплаты: Кошелёк Webmoney R _(рублёвый кошелёк)_
-     */
-    const PAYMENT_METHOD_WEBMONEY_R = 'webmoneyWmr';
-
-    /**
-     * Способ оплаты: ЮMoney _(бывшие "Яндекс.Деньги")_
-     */
-    const PAYMENT_METHOD_YOOMONEY = 'yandex';
-
-    /**
-     * Способ оплаты: QIWI
-     */
-    const PAYMENT_METHOD_QIWI = 'qiwi';
-
-    /**
-     * Способ оплаты: Paypal
-     */
-    const PAYMENT_METHOD_PAYPAL = 'paypal';
-
-    /**
-     * Способ оплаты: Apple Pay
-     */
-    const PAYMENT_METHOD_APPLE_PAY = 'applepay';
-
-    /**
-     * Способ оплаты: Samsung Pay
-     */
-    const PAYMENT_METHOD_SAMSUNG_PAY = 'samsungpay';
-
-    /**
-     * Способ оплаты: Google Pay
-     */
-    const PAYMENT_METHOD_GOOGLE_PAY = 'googlepay';
 
     /**
      * Язык: Английский
@@ -128,24 +82,6 @@ class Unitpay
      * @var integer
      */
     protected $projectId = 0;
-
-    /**
-     * Доступные способы оплаты
-     *
-     * @var array
-     */
-    protected $availablePaymentMethods = [
-        self::PAYMENT_METHOD_MOBILE => 'Мобильный платёж',
-        self::PAYMENT_METHOD_CARD => 'Банковские карты',
-        self::PAYMENT_METHOD_WEBMONEY_Z => 'WebMoney Z-',
-        self::PAYMENT_METHOD_WEBMONEY_R => 'WebMoney R-',
-        self::PAYMENT_METHOD_YOOMONEY => 'ЮMoney (бывшие "Яндекс.Деньги")',
-        self::PAYMENT_METHOD_QIWI => 'Qiwi',
-        self::PAYMENT_METHOD_PAYPAL => 'PayPal',
-        self::PAYMENT_METHOD_APPLE_PAY => 'Apple Pay',
-        self::PAYMENT_METHOD_SAMSUNG_PAY => 'Samsung Pay',
-        self::PAYMENT_METHOD_GOOGLE_PAY => 'Google Pay'
-    ];
 
     /**
      * Доступные языки
@@ -203,7 +139,7 @@ class Unitpay
      *
      * @var string
      */
-    private $defaultPaymentMethod = self::PAYMENT_METHOD_CARD;
+    private $defaultPaymentMethod;
 
     /**
      * Тестовый режим
@@ -279,10 +215,10 @@ class Unitpay
      */
     public function setDefaultPaymentMethod(string $method): void
     {
-        $availableMethods = array_keys($this->availablePaymentMethods);
-        if (!in_array($method, $availableMethods)) {
+        if (!Payment::isMethodSupported($method)) {
             throw new InvalidArgumentException('Указанный способ оплаты не поддерживается');
         }
+
         $this->defaultPaymentMethod = $method;
     }
 
@@ -313,8 +249,7 @@ class Unitpay
         }
 
         if (!empty($paymentMethod)) {
-            $availableMethods = array_keys($this->availablePaymentMethods);
-            if (!in_array($paymentMethod, $availableMethods)) {
+            if (!Payment::isMethodSupported($paymentMethod)) {
                 throw new InvalidArgumentException('Указанный способ оплаты не поддерживается');
             }
         }
@@ -385,8 +320,7 @@ class Unitpay
      */
     public function initPayment(string $method, string $account, float $sum, string $description, string $ip, ?string $resultUrl = null, ?string $phone = null, ?string $operator = null): ?int
     {
-        $availableMethods = array_keys($this->availablePaymentMethods);
-        if (!in_array($method, $availableMethods)) {
+        if (!Payment::isMethodSupported($method)) {
             throw new InvalidArgumentException('Указанный способ оплаты не поддерживается');
         }
         if (empty($account)) {
