@@ -68,4 +68,14 @@ class Locale
 
         $this->code = $code;
     }
+
+    /**
+     * Returns locale code
+     *
+     * @return string
+     */
+    public function code(): string
+    {
+        return $this->code;
+    }
 }

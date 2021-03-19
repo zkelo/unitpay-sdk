@@ -270,4 +270,24 @@ class Currency
         $this->code = $code;
         $this->name = $list[$this->code];
     }
+
+    /**
+     * Returns currency code
+     *
+     * @return string
+     */
+    public function code(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * Returns currency name
+     *
+     * @return string
+     */
+    public function name(): string
+    {
+        return $this->name;
+    }
 }

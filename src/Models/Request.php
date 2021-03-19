@@ -133,18 +133,28 @@ class Request implements RequestInterface
     }
 
     /**
-     * Validates request
+     * Checks if request is valid
      *
      * @param string $ip Client IP
      * @param array $data Request data
      * @return boolean `true` if request is valid or `false` if not
      */
-    public function validate(string $ip, array $data): bool
+    public function isValid(string $ip, array $data): bool
     {
         if (!$this->isIpValid($ip)) {
             return false;
         }
         // TODO Написать код проверки запроса
         return true;
+    }
+
+    /**
+     * Returns request method
+     *
+     * @return string
+     */
+    public function method(): string
+    {
+        return $this->method;
     }
 }

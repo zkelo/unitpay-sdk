@@ -116,4 +116,14 @@ class Payment
 
         $this->method = $method;
     }
+
+    /**
+     * Returns payment method
+     *
+     * @return string
+     */
+    public function method(): string
+    {
+        return $this->method;
+    }
 }
