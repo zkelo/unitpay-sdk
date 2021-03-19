@@ -14,6 +14,7 @@ use zkelo\Unitpay\Exceptions\{
 };
 use zkelo\Unitpay\Models\{
     Currency,
+    Locale,
     Payment,
     Request
 };
@@ -31,16 +32,6 @@ class Unitpay
      * Разделитель параметров в подписи запроса
      */
     const SIGNATURE_DELIMITER = '{up}';
-
-    /**
-     * Язык: Английский
-     */
-    const LOCALE_ENGLISH = 'en';
-
-    /**
-     * Язык: Русский
-     */
-    const LOCALE_RUSSIAN = 'ru';
 
     /**
      * Оператор: МТС
@@ -82,16 +73,6 @@ class Unitpay
      * @var integer
      */
     protected $projectId = 0;
-
-    /**
-     * Доступные языки
-     *
-     * @var array
-     */
-    protected $availableLocales = [
-        self::LOCALE_ENGLISH,
-        self::LOCALE_RUSSIAN
-    ];
 
     /**
      * Доступные операторы
@@ -253,7 +234,7 @@ class Unitpay
         $params['currency'] = $currency;
 
         if (!empty($locale)) {
-            if (!in_array($locale, $this->availableLocales)) {
+            if (!Locale::isSupported($locale)) {
                 throw new InvalidArgumentException('Указанный язык не поддерживается');
             }
             $params['locale'] = $locale;
