@@ -2,6 +2,8 @@
 
 namespace zkelo\Unitpay\Models;
 
+use InvalidArgumentException;
+
 /**
  * Currency model
  *
@@ -185,7 +187,9 @@ class Currency
      *
      * @var string
      */
-    protected $name = '';
+    protected $code = '';
+
+    protected $description = '';
 
     /**
      * Returns currencies list
@@ -233,26 +237,31 @@ class Currency
     }
 
     /**
-     * Checks if currency with following name is supported
+     * Checks if currency with following code is supported
      *
-     * @param string $name Currency name
+     * @param string $code Currency code
      * @return boolean `true` if currency is supported or `false` if not
      */
-    public static function isSupported(string $name): bool
+    public static function isSupported(string $code): bool
     {
         $list = array_keys(static::list());
-        return in_array($name, $list);
+        return in_array($code, $list);
     }
 
     /**
      * Constructor
      *
-     * @param string $name Currency name
+     * @param string $code Currency code
      * @return void
+     * @throws InvalidArgumentException If specified currency is not supported
      */
-    public function __construct(string $name)
+    public function __construct(string $code)
     {
-        //
+        if (!static::isSupported($code)) {
+            throw new InvalidArgumentException('This currency is not supported');
+        }
+
+        $this->code = $code;
     }
 
     /**
