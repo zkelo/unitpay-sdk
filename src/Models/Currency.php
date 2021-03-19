@@ -3,13 +3,14 @@
 namespace zkelo\Unitpay\Models;
 
 use InvalidArgumentException;
+use zkelo\Unitpay\Interfaces\ModelInterface;
 
 /**
  * Currency model
  *
  * @version 1.0.0
  */
-class Currency
+class Currency implements ModelInterface
 {
     /**
      * Валюта: Российский рубль
