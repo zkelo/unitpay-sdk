@@ -246,19 +246,19 @@ class Unitpay
     public function initPayment(string $method, string $account, float $sum, string $description, string $ip, ?string $resultUrl = null, ?string $phone = null, ?string $operator = null): ?int
     {
         if (!Payment::isMethodSupported($method)) {
-            throw new InvalidArgumentException('Указанный способ оплаты не поддерживается');
+            throw new InvalidArgumentException("Specified payment method \"$method\" is not supported");
         }
         if (empty($account)) {
-            throw new InvalidArgumentException('Идентификатор абонента не может быть пустым');
+            throw new InvalidArgumentException('Account ID is required');
         }
         if ($sum <= 0) {
-            throw new InvalidArgumentException('Сумма должна быть больше нуля');
+            throw new InvalidArgumentException('Amount can\'t be less than or equal 0');
         }
         if (empty($description)) {
-            throw new InvalidArgumentException('Описание не может быть пустым');
+            throw new InvalidArgumentException('Order description is required');
         }
         if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-            throw new InvalidArgumentException('Некорректный IP-адрес');
+            throw new InvalidArgumentException('Invalid IP');
         }
 
         $params = compact('account', 'sum', 'ip');
@@ -274,7 +274,7 @@ class Unitpay
         }
         if (!empty($operator)) {
             if (!Operator::isSupported($operator)) {
-                throw new InvalidArgumentException('Указанный оператор не поддерживается');
+                throw new InvalidArgumentException("Specified operator \"$operator\" is not supported");
             }
         }
 
