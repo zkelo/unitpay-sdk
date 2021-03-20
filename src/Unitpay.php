@@ -338,8 +338,7 @@ class Unitpay
         $params = array_filter($params);
         $params = implode(self::SIGNATURE_DELIMITER, $params);
 
-        $hash = hash('sha256', $params);
-        return $hash;
+        return hash('sha256', $params);
     }
 
     /**
