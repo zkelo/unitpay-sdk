@@ -32,4 +32,11 @@ interface LocaleInterface
      * @return string|null Message or `null` if key not found
      */
     public static function message(string $key): ?string;
+
+    /**
+     * Alias of `message()`
+     *
+     * @see static::message
+     */
+    public static function t(string $key): ?string;
 }
