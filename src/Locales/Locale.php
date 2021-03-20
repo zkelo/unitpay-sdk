@@ -52,6 +52,17 @@ abstract class Locale implements LocaleInterface
     /**
      * {@inheritDoc}
      */
+    public static function message(string $key): ?string
+    {
+        if (!static::hasMessage($key)) {
+            return null;
+        }
+        return static::rawMessages()[$key];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public static function t(string $key): ?string
     {
         return static::message($key);
