@@ -88,7 +88,7 @@ class Unitpay
      *
      * @var string
      */
-    private $defaultLocale = Locale::ENGLISH;
+    private $defaultLocale;
 
     /**
      * Locale
@@ -146,7 +146,7 @@ class Unitpay
         $this->projectId = intval($this->projectId);
 
         $this->client = HttpClient::create();
-        $this->locale = new Locale($this->defaultLocale);
+        $this->setDefaultLocale(Locale::ENGLISH);
     }
 
     /**
