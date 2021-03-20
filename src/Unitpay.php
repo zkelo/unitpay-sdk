@@ -167,10 +167,10 @@ class Unitpay
      * @param float $sum Amount
      * @param string $account Account ID _(for example, it can be email or order ID)_
      * @param string $description Order description
-     * @param string|null $paymentMethod Способ оплаты _(по умолчанию - банковские карты)_. Список поддерживаемых способов оплаты можно посмотреть [здесь](https://help.unitpay.ru/book-of-reference/payment-system-codes)
-     * @param string|null $currency Валюта заказа по стандарту ISO 4217 _(по умолчанию - `RUB`)_. Список поддерживаемых валют можно посмотреть [здесь](https://help.unitpay.ru/book-of-reference/currency-codes)
-     * @param string|null $locale
-     * @param string|null $backUrl
+     * @param string|null $paymentMethod Payment method _(default is bank cards)_. You could use one of constants that starts with `METHOD_` were provided by `Payment` model. List of supported payment methods can be found [here](https://help.unitpay.ru/v/master/book-of-reference/payment-system-codes)
+     * @param string|null $currency Order currency according ISO 4217 standard (default is `RUB`). You could use one of constants provided by `Currency` model. List of supported currencies can be found [here](https://help.unitpay.ru/v/master/book-of-reference/currency-codes)
+     * @param string|null $locale Locale code. You could use one of constants provided by `Locale` model
+     * @param string|null $backUrl URL that could be used for back redirect after payment processing
      * @return string
      */
     public function form(float $sum, string $account, string $description, ?string $paymentMethod = null, ?string $currency = null, ?string $locale = null, ?string $backUrl = null): string
