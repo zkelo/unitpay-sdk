@@ -98,7 +98,7 @@ class Payment
      */
     public static function isMethodSupported(string $method): bool
     {
-        $methods = array_keys(static::methods());
+        $methods = static::methods();
         return in_array($method, $methods);
     }
 
