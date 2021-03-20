@@ -3,8 +3,10 @@
 namespace zkelo\Unitpay\Locales;
 
 use zkelo\Unitpay\Interfaces\LocaleInterface;
-use zkelo\Unitpay\Models\Currency;
-use zkelo\Unitpay\Models\Payment;
+use zkelo\Unitpay\Models\{
+    Currency,
+    Payment
+};
 
 /**
  * Russian locale
@@ -62,7 +64,7 @@ class Ru extends Locale implements LocaleInterface
                     Payment::METHOD_CARD => 'Банковские карты',
                     Payment::METHOD_WEBMONEY_Z => 'WebMoney Z-',
                     Payment::METHOD_WEBMONEY_R => 'WebMoney R-',
-                    Payment::METHOD_YOOMONEY => 'ЮMoney (бывшие "Яндекс.Деньги")',
+                    Payment::METHOD_YOOMONEY => 'ЮMoney',
                     Payment::METHOD_QIWI => 'Qiwi',
                     Payment::METHOD_PAYPAL => 'PayPal',
                     Payment::METHOD_APPLE_PAY => 'Apple Pay',

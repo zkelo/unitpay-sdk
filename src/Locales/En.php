@@ -3,7 +3,10 @@
 namespace zkelo\Unitpay\Locales;
 
 use zkelo\Unitpay\Interfaces\LocaleInterface;
-use zkelo\Unitpay\Models\Currency;
+use zkelo\Unitpay\Models\{
+    Currency,
+    Payment
+};
 
 /**
  * English locale
@@ -54,6 +57,20 @@ class En extends Locale implements LocaleInterface
                 Currency::CHF => 'Swiss frank',
                 Currency::ZAR => 'South African Rand',
                 Currency::JPY => 'Japanese yen'
+            ],
+            'payment' => [
+                'method' => [
+                    Payment::METHOD_MOBILE => 'Mobile payment',
+                    Payment::METHOD_CARD => 'Bank cards',
+                    Payment::METHOD_WEBMONEY_Z => 'WebMoney Z-',
+                    Payment::METHOD_WEBMONEY_R => 'WebMoney R-',
+                    Payment::METHOD_YOOMONEY => 'ЮMoney',
+                    Payment::METHOD_QIWI => 'Qiwi',
+                    Payment::METHOD_PAYPAL => 'PayPal',
+                    Payment::METHOD_APPLE_PAY => 'Apple Pay',
+                    Payment::METHOD_SAMSUNG_PAY => 'Samsung Pay',
+                    Payment::METHOD_GOOGLE_PAY => 'Google Pay'
+                ]
             ]
         ];
     }
