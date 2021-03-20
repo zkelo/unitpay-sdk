@@ -77,16 +77,16 @@ class Payment
     public static function methods(): array
     {
         return [
-            static::METHOD_MOBILE => 'Мобильный платёж',
-            static::METHOD_CARD => 'Банковские карты',
-            static::METHOD_WEBMONEY_Z => 'WebMoney Z-',
-            static::METHOD_WEBMONEY_R => 'WebMoney R-',
-            static::METHOD_YOOMONEY => 'ЮMoney (бывшие "Яндекс.Деньги")',
-            static::METHOD_QIWI => 'Qiwi',
-            static::METHOD_PAYPAL => 'PayPal',
-            static::METHOD_APPLE_PAY => 'Apple Pay',
-            static::METHOD_SAMSUNG_PAY => 'Samsung Pay',
-            static::METHOD_GOOGLE_PAY => 'Google Pay'
+            static::METHOD_MOBILE,
+            static::METHOD_CARD,
+            static::METHOD_WEBMONEY_Z,
+            static::METHOD_WEBMONEY_R,
+            static::METHOD_YOOMONEY,
+            static::METHOD_QIWI,
+            static::METHOD_PAYPAL,
+            static::METHOD_APPLE_PAY,
+            static::METHOD_SAMSUNG_PAY,
+            static::METHOD_GOOGLE_PAY
         ];
     }
 
