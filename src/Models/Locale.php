@@ -86,7 +86,7 @@ class Locale
      * @param string $code Locale code
      * @param string $handler Handler class fully-qualified path
      * @return void
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException If handler class not found
      */
     public static function use(string $code, string $handler): void
     {
