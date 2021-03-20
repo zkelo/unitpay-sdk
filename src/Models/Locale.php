@@ -7,6 +7,7 @@ use InvalidArgumentException;
 /**
  * Locale model
  *
+ * @author Aleksandr Riabov <ar161ru@gmail.com>
  * @version 1.0.0
  */
 class Locale
@@ -77,5 +78,15 @@ class Locale
     public function code(): string
     {
         return $this->code;
+    }
+
+    /**
+     * Loads locale specified in a model instance
+     *
+     * @return boolean
+     */
+    protected function load(): bool
+    {
+        return false;
     }
 }

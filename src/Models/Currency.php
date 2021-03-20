@@ -7,177 +7,178 @@ use InvalidArgumentException;
 /**
  * Currency model
  *
+ * @author Aleksandr Riabov <ar161ru@gmail.com>
  * @version 1.0.0
  */
 class Currency
 {
     /**
-     * Валюта: Российский рубль
+     * Currency: Russian ruble
      */
     const RUB = 'RUB';
 
     /**
-     * Валюта: Евро
+     * Currency: Euro
      */
     const EUR = 'EUR';
 
     /**
-     * Валюта: Доллар США
+     * Currency: US dollar
      */
     const USD = 'USD';
 
     /**
-     * Валюта: Австралийский доллар
+     * Currency: Australian dollar
      */
     const AUD = 'AUD';
 
     /**
-     * Валюта: Азербайджанский манат
+     * Currency: Azerbaijani manat
      */
     const AZN = 'AZN';
 
     /**
-     * Валюта: Армянский драм
+     * Currency: Armenian dram
      */
     const AMD = 'AMD';
 
     /**
-     * Валюта: Белорусский рубль
+     * Currency: Belarusian ruble
      */
     const BYN = 'BYN';
 
     /**
-     * Валюта: Болгарский лев
+     * Currency: Bulgarian lev
      */
     const BGN = 'BGN';
 
     /**
-     * Валюта: Бразильский реал
+     * Currency: Brazilian real
      */
     const BRL = 'BRL';
 
     /**
-     * Валюта: Венгерский форинт
+     * Currency: Hungarian forint
      */
     const HUF = 'HUF';
 
     /**
-     * Валюта: Вон Республики Корея
+     * Currency: Won Republic of Korea
      */
     const KRW = 'KRW';
 
     /**
-     * Валюта: Гонконгский доллар
+     * Currency: Hong kong dollar
      */
     const HKD = 'HKD';
 
     /**
-     * Валюта: Датская крона
+     * Currency: Danish krone
      */
     const DKK = 'DKK';
 
     /**
-     * Валюта: Индийский рупий
+     * Currency: Indian rupee
      */
     const INR = 'INR';
 
     /**
-     * Валюта: Казахстанский тенге
+     * Currency: Kazakhstani tenge
      */
     const KZT = 'KZT';
 
     /**
-     * Валюта: Канадский доллар
+     * Currency: Canadian dollar
      */
     const CAD = 'CAD';
 
     /**
-     * Валюта: Киргизский сом
+     * Currency: Kyrgyz som
      */
     const KGS = 'KGS';
 
     /**
-     * Валюта: Китайский юань
+     * Currency: Chinese yuan
      */
     const CNY = 'CNY';
 
     /**
-     * Валюта: Молдавский лей
+     * Currency: Moldovan leu
      */
     const MDL = 'MDL';
 
     /**
-     * Валюта: Новый туркменский манат
+     * Currency: New Turkmen manat
      */
     const TMT = 'TMT';
 
     /**
-     * Валюта: Норвежский крон
+     * Currency: Norwegian krone
      */
     const NOK = 'NOK';
 
     /**
-     * Валюта: Польский злотый
+     * Currency: Polish zloty
      */
     const PLN = 'PLN';
 
     /**
-     * Валюта: Румынский лей
+     * Currency: Romanian leu
      */
     const RON = 'RON';
 
     /**
-     * Валюта: Сингапурский доллар
+     * Currency: Singapore dollar
      */
     const SGD = 'SGD';
 
     /**
-     * Валюта: Таджикский сомони
+     * Currency: Tajik somoni
      */
     const TJS = 'TJS';
 
     /**
-     * Валюта: Турецкая лира
+     * Currency: Turkish lira
      */
     const TRY = 'TRY';
 
     /**
-     * Валюта: Узбекский сум
+     * Currency: Uzbek sum
      */
     const UZS = 'UZS';
 
     /**
-     * Валюта: Украинская гривна
+     * Currency: Ukrainian hryvnia
      */
     const UAH = 'UAH';
 
     /**
-     * Валюта: Фунт стерлингов Соединённого королевства
+     * Currency: British pound sterling
      */
     const GBP = 'GBP';
 
     /**
-     * Валюта: Чешская крона
+     * Currency: Czech crown
      */
     const CZK = 'CZK';
 
     /**
-     * Валюта: Шведская крона
+     * Currency: Swedish krona
      */
     const SEK = 'SEK';
 
     /**
-     * Валюта: Швейцарский франк
+     * Currency: Swiss frank
      */
     const CHF = 'CHF';
 
     /**
-     * Валюта: Южноафриканский рэнд
+     * Currency: South African Rand
      */
     const ZAR = 'ZAR';
 
     /**
-     * Валюта: Японская йена
+     * Currency: Japanese yen
      */
     const JPY = 'JPY';
 

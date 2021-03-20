@@ -7,6 +7,7 @@ use InvalidArgumentException;
 /**
  * Payment model
  *
+ * @author Aleksandr Riabov <ar161ru@gmail.com>
  * @version 1.0.0
  */
 class Payment
