@@ -176,20 +176,20 @@ class Unitpay
     public function form(float $sum, string $account, string $description, ?string $paymentMethod = null, ?string $currency = null, ?string $locale = null, ?string $backUrl = null): string
     {
         if ($sum <= 0) {
-            throw new InvalidArgumentException('Сумма не может быть меньше или равна нулю');
+            throw new InvalidArgumentException('Amount can\'t be less than or equal 0');
         }
 
         if (empty($account)) {
-            throw new InvalidArgumentException('Идентификатор абонента не может быть пустым');
+            throw new InvalidArgumentException('Account ID is required');
         }
 
         if (empty($description)) {
-            throw new InvalidArgumentException('Описание заказа не может быть пустым');
+            throw new InvalidArgumentException('Order description is required');
         }
 
         if (!empty($paymentMethod)) {
             if (!Payment::isMethodSupported($paymentMethod)) {
-                throw new InvalidArgumentException('Указанный способ оплаты не поддерживается');
+                throw new InvalidArgumentException("Specified payment method \"$paymentMethod\" is not supported");
             }
         }
 
@@ -198,14 +198,14 @@ class Unitpay
 
         if (!empty($currency)) {
             if (!Currency::isSupported($currency)) {
-                throw new InvalidArgumentException('Указанная валюта не поддерживается');
+                throw new InvalidArgumentException("Specified currency \"$currency\" is not supported");
             }
         }
         $params['currency'] = $currency;
 
         if (!empty($locale)) {
             if (!Locale::isSupported($locale)) {
-                throw new InvalidArgumentException('Указанный язык не поддерживается');
+                throw new InvalidArgumentException("Specified locale \"$locale\" is not supported");
             }
             $params['locale'] = $locale;
         }
@@ -229,19 +229,19 @@ class Unitpay
     }
 
     /**
-     * Инициализирует платёж
+     * Initializes payment
      *
-     * @param string $method Способ оплаты
-     * @param string $account Идентификатор абонента
-     * @param float $sum Сумма
-     * @param string $description Описание
-     * @param string $ip IP-адрес
-     * @param string|null $resultUrl Адрес, на который нужно будет перенаправить пользователя после оплаты
-     * @param string|null $phone Номер телефона
-     * @param string|null $operator Оператор
-     * @return integer|null Номер платежа в системе Unitpay или `null`, если создать платёж не удалось
-     * @throws InvalidArgumentException Если какой-либо из параметров указан неверно или не указан вовсе
-     * @throws ApiException При ошибочном ответе API
+     * @param string $method ayment method _(default is bank cards)_. You could use one of constants that starts with `METHOD_` were provided by `Payment` model. List of supported payment methods can be found [here](https://help.unitpay.ru/v/master/book-of-reference/payment-system-codes)
+     * @param string $account Account ID _(for example, it can be email or order ID)_
+     * @param float $sum Amount
+     * @param string $description Order description
+     * @param string $ip IP address
+     * @param string|null $resultUrl Page URL that could be used as payment result page. If not specified, then payment receipt page will be used
+     * @param string|null $phone Phone
+     * @param string|null $operator Operator
+     * @return integer|null Payment ID or `null` if payment failed be created
+     * @throws InvalidArgumentException If some of passed param has invalid value
+     * @throws ApiException If API response is invalid
      */
     public function initPayment(string $method, string $account, float $sum, string $description, string $ip, ?string $resultUrl = null, ?string $phone = null, ?string $operator = null): ?int
     {
@@ -310,7 +310,7 @@ class Unitpay
         $content = $response->getContent(false);
         if (isset($content['error'])) {
             if (!isset($content['error']['message'])) {
-                throw new ApiException('Неопознанная ошибка API');
+                throw new ApiException('Unknown API error');
             }
             throw new ApiException($content['error']['message']);
         }
