@@ -2,6 +2,8 @@
 
 namespace zkelo\Unitpay\Locales;
 
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 use zkelo\Unitpay\Interfaces\LocaleInterface;
 
 /**
@@ -14,6 +16,31 @@ use zkelo\Unitpay\Interfaces\LocaleInterface;
  */
 abstract class Locale implements LocaleInterface
 {
+    /**
+     * {@inheritDoc}
+     */
+    public static function rawMessages(): array
+    {
+        $raw = [];
+
+        $arrayIterator = new RecursiveArrayIterator(static::messages());
+        $iterator = new RecursiveIteratorIterator($arrayIterator);
+
+        foreach ($iterator as $value) {
+            $keys = [];
+            $range = range(0, $iterator->getDepth());
+
+            foreach ($range as $depth) {
+                $keys[] = $iterator->getSubIterator($depth)->key();
+            }
+
+            $dotKey = implode('.', $keys);
+            $raw[$dotKey] = $value;
+        }
+
+        return $raw;
+    }
+
     /**
      * {@inheritDoc}
      */
