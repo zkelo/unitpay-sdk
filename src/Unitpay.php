@@ -15,6 +15,7 @@ use zkelo\Unitpay\Exceptions\{
 use zkelo\Unitpay\Models\{
     Currency,
     Locale,
+    Operator,
     Payment,
     Request
 };
@@ -32,26 +33,6 @@ class Unitpay
      * Разделитель параметров в подписи запроса
      */
     const SIGNATURE_DELIMITER = '{up}';
-
-    /**
-     * Оператор: МТС
-     */
-    const OPERATOR_MTS = 'mts';
-
-    /**
-     * Оператор: Мегафон
-     */
-    const OPERATOR_MEGAFON = 'mf';
-
-    /**
-     * Оператор: Билайн
-     */
-    const OPERATOR_BEELINE = 'beeline';
-
-    /**
-     * Оператор: Теле2
-     */
-    const OPERATOR_TELE2 = 'tele2';
 
     /**
      * Домен
@@ -73,18 +54,6 @@ class Unitpay
      * @var integer
      */
     protected $projectId = 0;
-
-    /**
-     * Доступные операторы
-     *
-     * @var array
-     */
-    protected $availableOperators = [
-        self::OPERATOR_MTS => 'МТС',
-        self::OPERATOR_MEGAFON => 'Мегафон',
-        self::OPERATOR_BEELINE => 'Билайн',
-        self::OPERATOR_TELE2 => 'Теле2'
-    ];
 
     /**
      * Секретный ключ
@@ -303,8 +272,7 @@ class Unitpay
             $params['phone'] = $phone;
         }
         if (!empty($operator)) {
-            $availableOperators = array_keys($this->availableOperators);
-            if (!in_array($operator, $availableOperators)) {
+            if (!Operator::isSupported($operator)) {
                 throw new InvalidArgumentException('Указанный оператор не поддерживается');
             }
         }
