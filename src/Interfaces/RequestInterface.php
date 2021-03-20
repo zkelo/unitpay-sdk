@@ -7,6 +7,7 @@ use InvalidArgumentException;
 /**
  * Interface for request models
  *
+ * @author Aleksandr Riabov <ar161ru@gmail.com>
  * @version 1.0.0
  */
 interface RequestInterface
