@@ -84,6 +84,20 @@ class Unitpay
     private $defaultPaymentMethod = Payment::METHOD_CARD;
 
     /**
+     * Default locale
+     *
+     * @var string
+     */
+    private $defaultLocale = Locale::ENGLISH;
+
+    /**
+     * Locale
+     *
+     * @var Locale
+     */
+    private $locale;
+
+    /**
      * Test mode
      *
      * @var boolean
@@ -132,6 +146,7 @@ class Unitpay
         $this->projectId = intval($this->projectId);
 
         $this->client = HttpClient::create();
+        $this->locale = new Locale($this->defaultLocale);
     }
 
     /**
@@ -148,7 +163,7 @@ class Unitpay
     /**
      * Changes default payment method
      *
-     * @param string $method Method _(one of constants that starts with `PAYMENT_METHOD`)_
+     * @param string $method Method
      * @return void
      * @throws InvalidArgumentException If specified payment method is not supported
      */
@@ -159,6 +174,22 @@ class Unitpay
         }
 
         $this->defaultPaymentMethod = $method;
+    }
+
+    /**
+     * Changes default locale
+     *
+     * @param string $locale Locale
+     * @return void
+     */
+    public function setDefaultLocale(string $locale): void
+    {
+        if (!Locale::isSupported($locale)) {
+            throw new InvalidArgumentException('Specified locale is not supported');
+        }
+
+        $this->defaultLocale = $locale;
+        $this->locale = new Locale($this->defaultLocale);
     }
 
     /**
