@@ -5,6 +5,7 @@ namespace zkelo\Unitpay\Locales;
 use zkelo\Unitpay\Interfaces\LocaleInterface;
 use zkelo\Unitpay\Models\{
     Currency,
+    Operator,
     Payment
 };
 
@@ -71,6 +72,12 @@ class Ru extends Locale implements LocaleInterface
                     Payment::METHOD_SAMSUNG_PAY => 'Samsung Pay',
                     Payment::METHOD_GOOGLE_PAY => 'Google Pay'
                 ]
+            ],
+            'operator' => [
+                Operator::MTS => 'МТС',
+                Operator::MEGAFON => 'Мегафон',
+                Operator::BEELINE => 'Билайн',
+                Operator::TELE2 => 'Теле2'
             ]
         ];
     }
