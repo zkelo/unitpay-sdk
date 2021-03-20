@@ -18,6 +18,13 @@ interface LocaleInterface
     public static function messages(): array;
 
     /**
+     * Returns two-dimensional array with messages with dot-syntax keys
+     *
+     * @return array
+     */
+    public static function rawMessages(): array;
+
+    /**
      * Checks if message with specified key exists
      *
      * @param string $key Message key
