@@ -47,10 +47,10 @@ class Operator
     public static function list(): array
     {
         return [
-            static::MTS => 'МТС',
-            static::MEGAFON => 'Мегафон',
-            static::BEELINE => 'Билайн',
-            static::TELE2 => 'Теле2'
+            static::MTS,
+            static::MEGAFON,
+            static::BEELINE,
+            static::TELE2
         ];
     }
 
@@ -62,7 +62,7 @@ class Operator
      */
     public static function isSupported(string $code): bool
     {
-        $list = array_keys(static::list());
+        $list = static::list();
         return in_array($code, $list);
     }
 
