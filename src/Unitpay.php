@@ -16,8 +16,7 @@ use zkelo\Unitpay\Models\{
     Currency,
     Locale,
     Operator,
-    Payment,
-    Request
+    Payment
 };
 
 /**
