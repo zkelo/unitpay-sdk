@@ -3,6 +3,11 @@
 namespace zkelo\Unitpay\Models;
 
 use InvalidArgumentException;
+use zkelo\Unitpay\Interfaces\LocaleInterface;
+use zkelo\Unitpay\Locales\{
+    En,
+    Ru
+};
 
 /**
  * Locale model
@@ -23,11 +28,35 @@ class Locale
     const RUSSIAN = 'ru';
 
     /**
+     * Handlers that will be used to retrieve locale messages
+     *
+     * @var array
+     */
+    private static $handlers = [
+        static::ENGLISH => En::class,
+        static::RUSSIAN => Ru::class
+    ];
+
+    /**
      * Locale code
      *
      * @var string
      */
     protected $code;
+
+    /**
+     * Localized messages
+     *
+     * @var array
+     */
+    protected $messages;
+
+    /**
+     * Locale handler
+     *
+     * @var LocaleInterface
+     */
+    protected $handler;
 
     /**
      * Returns locales list
@@ -36,10 +65,7 @@ class Locale
      */
     public static function list(): array
     {
-        return [
-            static::ENGLISH,
-            static::RUSSIAN
-        ];
+        return array_keys(static::$handlers);
     }
 
     /**
@@ -52,6 +78,23 @@ class Locale
     {
         $list = static::list();
         return in_array($code, $list);
+    }
+
+    /**
+     * Makes model to use certain handler class for locale
+     *
+     * @param string $code Locale code
+     * @param string $handler Handler class fully-qualified path
+     * @return void
+     * @throws InvalidArgumentException
+     */
+    public static function use(string $code, string $handler): void
+    {
+        if (!class_exists($handler)) {
+            throw new InvalidArgumentException("Class \"$handler\" is not defined");
+        }
+
+        static::$handlers[$code] = $handler;
     }
 
     /**
@@ -68,6 +111,8 @@ class Locale
         }
 
         $this->code = $code;
+        $this->handler = new static::$handlers[$this->code];
+        $this->messages = $this->handler::rawMessages();
     }
 
     /**
@@ -78,15 +123,5 @@ class Locale
     public function code(): string
     {
         return $this->code;
-    }
-
-    /**
-     * Loads locale specified in a model instance
-     *
-     * @return boolean
-     */
-    protected function load(): bool
-    {
-        return false;
     }
 }
