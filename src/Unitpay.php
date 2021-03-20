@@ -30,40 +30,44 @@ use zkelo\Unitpay\Models\{
 class Unitpay
 {
     /**
-     * Разделитель параметров в подписи запроса
+     * Signature params delimiter
      */
     const SIGNATURE_DELIMITER = '{up}';
 
     /**
-     * Домен
+     * Domain
+     *
+     * It will be used to make requests to API
      *
      * @var string
      */
     protected $domain = 'unitpay.ru';
 
     /**
-     * Публичный ключ
+     * Public key
      *
      * @var string
      */
     protected $publicKey = '';
 
     /**
-     * Номер проекта в системе Unitpay
+     * Project ID
+     *
+     * You don't need to pass this param to SDK constructor. It will be automatically extracted from first part of your public key.
      *
      * @var integer
      */
     protected $projectId = 0;
 
     /**
-     * Секретный ключ
+     * Secret key
      *
      * @var string
      */
     private $secretKey = '';
 
     /**
-     * Список доступных доменов
+     * List of available Unitpay domains
      *
      * @var array
      */
@@ -73,46 +77,46 @@ class Unitpay
     ];
 
     /**
-     * Способ оплаты, используемый по умолчанию
+     * Default payment method
      *
      * @var string
      */
-    private $defaultPaymentMethod;
+    private $defaultPaymentMethod = Payment::METHOD_CARD;
 
     /**
-     * Тестовый режим
+     * Test mode
      *
      * @var boolean
      */
     private $testMode = false;
 
     /**
-     * HTTP-клиент для выполнения запросов
+     * HTTP client that will be used to make requests
      *
      * @var HttpClientInterface
      */
     private $client;
 
     /**
-     * Конструктор
+     * Constructs a new SDK instance
      *
-     * @param string $secretKey Секретный ключ
-     * @param string $publicKey Публичный ключ
-     * @param string|null $domain Домен _(по умолчанию - `unitpay.ru`)_
+     * @param string $secretKey Secret key
+     * @param string $publicKey Public key
+     * @param string|null $domain Domain _(default is `unitpay.ru`)_
      * @return void
-     * @throws InvalidConfigException Если у какого-то из переданных аргументов некорректное значение
+     * @throws InvalidConfigException If some of passed params has invalid value
      */
     public function __construct(string $secretKey, string $publicKey, ?string $domain = null)
     {
         if (empty($secretKey)) {
-            throw new InvalidConfigException('Не передан секретный ключ');
+            throw new InvalidConfigException('Secret key is required');
         }
         if (empty($publicKey)) {
-            throw new InvalidConfigException('Не передан публичный ключ');
+            throw new InvalidConfigException('Public key is required');
         }
         if (!is_null($domain)) {
             if (!in_array($domain, $this->availableDomains)) {
-                throw new InvalidConfigException('Указанный домен недоступен для использования');
+                throw new InvalidConfigException('Specified domain is not supported');
             }
         }
 
@@ -121,13 +125,9 @@ class Unitpay
         $this->domain = $domain ?? $this->availableDomains[0];
 
         $projectData = explode('-', $this->publicKey, 2);
-        if ($projectData === false) {
-            throw new InvalidArgumentException('Не удаётся извлечь номер проекта из публичного ключа');
-        }
-
         $this->projectId = array_shift($projectData);
         if (is_null($this->projectId)) {
-            throw new InvalidArgumentException('Не удаётся извлечь номер проекта из публичного ключа');
+            throw new InvalidArgumentException('Unable to extract project ID from public key');
         }
         $this->projectId = intval($this->projectId);
 
@@ -135,9 +135,9 @@ class Unitpay
     }
 
     /**
-     * Включение и отключение тестового режима
+     * Enables or disables test mode
      *
-     * @param boolean $toggle `true`, если необходимо включить тестовый режим и `false`, если необходимо его выключить
+     * @param boolean $toggle `true` to enable or `false` to disable
      * @return void
      */
     public function toggleTestMode(bool $toggle): void
@@ -146,26 +146,27 @@ class Unitpay
     }
 
     /**
-     * Изменение способа оплаты, используемого по умолчанию
+     * Changes default payment method
      *
-     * @param string $method Способ оплаты _(одна из констант, начинающихся с `PAYMENT_METHOD`)_
+     * @param string $method Method _(one of constants that starts with `PAYMENT_METHOD`)_
      * @return void
+     * @throws InvalidArgumentException If specified payment method is not supported
      */
     public function setDefaultPaymentMethod(string $method): void
     {
         if (!Payment::isMethodSupported($method)) {
-            throw new InvalidArgumentException('Указанный способ оплаты не поддерживается');
+            throw new InvalidArgumentException('Specified payment method is not supported');
         }
 
         $this->defaultPaymentMethod = $method;
     }
 
     /**
-     * Создание ссылки на форму оплаты
+     * Creates link to payment form
      *
-     * @param float $sum Сумма платежа
-     * @param string $account Идентификатор абонента _(например, email или номер заказа)_
-     * @param string $description Описание заказа
+     * @param float $sum Amount
+     * @param string $account Account ID _(for example, it can be email or order ID)_
+     * @param string $description Order description
      * @param string|null $paymentMethod Способ оплаты _(по умолчанию - банковские карты)_. Список поддерживаемых способов оплаты можно посмотреть [здесь](https://help.unitpay.ru/book-of-reference/payment-system-codes)
      * @param string|null $currency Валюта заказа по стандарту ISO 4217 _(по умолчанию - `RUB`)_. Список поддерживаемых валют можно посмотреть [здесь](https://help.unitpay.ru/book-of-reference/currency-codes)
      * @param string|null $locale
