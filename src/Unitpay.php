@@ -287,12 +287,12 @@ class Unitpay
     }
 
     /**
-     * Выполнение запроса к API
+     * Makes request to the API
      *
-     * @param string $method Название метода
-     * @param array $params Параметры
-     * @return ResponseInterface Ответ
-     * @throws ApiException При ошибочном ответе API
+     * @param string $method Method name
+     * @param array $params Params
+     * @return ResponseInterface Response
+     * @throws ApiException If API response is invalid
      */
     protected function api(string $method, array $params): ResponseInterface
     {
@@ -316,7 +316,7 @@ class Unitpay
         }
 
         if (!isset($content['result'])) {
-            throw new ApiException('В ответе API отсутствует поле "result"');
+            throw new ApiException('API response doesn\'t have field "result"');
         }
 
         return $response;
