@@ -13,12 +13,12 @@ use InvalidArgumentException;
 class Locale
 {
     /**
-     * Язык: Английский
+     * Locale code: English
      */
     const ENGLISH = 'en';
 
     /**
-     * Язык: Русский
+     * Locale code: Russian
      */
     const RUSSIAN = 'ru';
 

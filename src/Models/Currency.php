@@ -204,40 +204,40 @@ class Currency
     public static function list(): array
     {
         return [
-            static::RUB => 'Российский рубль',
-            static::EUR => 'Евро',
-            static::USD => 'Доллар США',
-            static::AUD => 'Австралийский доллар',
-            static::AZN => 'Азербайджанский манат',
-            static::AMD => 'Армянский драм',
-            static::BYN => 'Белорусский рубль',
-            static::BGN => 'Болгарский лев',
-            static::BRL => 'Бразильский реал',
-            static::HUF => 'Венгерский форинт',
-            static::KRW => 'Вон Республики Корея',
-            static::HKD => 'Гонконгский доллар',
-            static::DKK => 'Датская крона',
-            static::INR => 'Индийский рупий ',
-            static::KZT => 'Казахстанский тенге',
-            static::CAD => 'Канадский доллар',
-            static::KGS => 'Киргизский сом',
-            static::CNY => 'Китайский юань',
-            static::MDL => 'Молдавский лей',
-            static::TMT => 'Новый туркменский манат',
-            static::NOK => 'Норвежский крон',
-            static::PLN => 'Польский злотый',
-            static::RON => 'Румынский лей',
-            static::SGD => 'Сингапурский доллар',
-            static::TJS => 'Таджикский сомони',
-            static::TRY => 'Турецкая лира',
-            static::UZS => 'Узбекский сум',
-            static::UAH => 'Украинская гривна',
-            static::GBP => 'Фунт стерлингов Соединённого королевства',
-            static::CZK => 'Чешская крона',
-            static::SEK => 'Шведская крона',
-            static::CHF => 'Швейцарский франк',
-            static::ZAR => 'Южноафриканский рэнд',
-            static::JPY => 'Японская йена'
+            static::RUB,
+            static::EUR,
+            static::USD,
+            static::AUD,
+            static::AZN,
+            static::AMD,
+            static::BYN,
+            static::BGN,
+            static::BRL,
+            static::HUF,
+            static::KRW,
+            static::HKD,
+            static::DKK,
+            static::INR,
+            static::KZT,
+            static::CAD,
+            static::KGS,
+            static::CNY,
+            static::MDL,
+            static::TMT,
+            static::NOK,
+            static::PLN,
+            static::RON,
+            static::SGD,
+            static::TJS,
+            static::TRY,
+            static::UZS,
+            static::UAH,
+            static::GBP,
+            static::CZK,
+            static::SEK,
+            static::CHF,
+            static::ZAR,
+            static::JPY
         ];
     }
 
@@ -249,7 +249,7 @@ class Currency
      */
     public static function isSupported(string $code): bool
     {
-        $list = array_keys(static::list());
+        $list = static::list();
         return in_array($code, $list);
     }
 
