@@ -47,7 +47,7 @@ class Locale
     /**
      * Localized messages
      *
-     * @var array
+     * @var string[]
      */
     protected $messages;
 
@@ -123,5 +123,39 @@ class Locale
     public function code(): string
     {
         return $this->code;
+    }
+
+    /**
+     * Returns locale handler
+     *
+     * @return LocaleInterface
+     */
+    public function handler(): LocaleInterface
+    {
+        return $this->handler;
+    }
+
+    /**
+     * Returns message
+     *
+     * @param string $key Message key
+     * @return string|null Message or `null` if specified key not found
+     */
+    public function message(string $key): ?string
+    {
+        if (!isset($this->messages[$key])) {
+            return null;
+        }
+        return $this->messages[$key];
+    }
+
+    /**
+     * Alias of `message()`
+     *
+     * @see static::message
+     */
+    public function t(string $key): ?string
+    {
+        return $this->message($key);
     }
 }
