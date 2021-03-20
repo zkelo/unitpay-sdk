@@ -323,13 +323,13 @@ class Unitpay
     }
 
     /**
-     * Вычисление подписи запроса
+     * Calculates request signature
      *
-     * @param string $account Идентификатор абонента
-     * @param string $description Описание заказа
-     * @param float $sum Сумма
-     * @param string|null $currency Валюта _(необязательно)_
-     * @return string Подпись
+     * @param string $account Account ID
+     * @param string $description Order description
+     * @param float $sum Amount
+     * @param string|null $currency Currency
+     * @return string Signature
      */
     protected function signature(string $account, string $description, float $sum, ?string $currency = null): string
     {
@@ -343,7 +343,7 @@ class Unitpay
     }
 
     /**
-     * Получение базового адреса
+     * Returns base URL
      *
      * @return string
      */
