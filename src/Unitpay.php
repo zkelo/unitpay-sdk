@@ -16,7 +16,8 @@ use zkelo\Unitpay\Models\{
     Currency,
     Locale,
     Operator,
-    Payment
+    Payment,
+    PaymentInfo
 };
 
 /**
@@ -312,8 +313,30 @@ class Unitpay
         $params['signature'] = $this->signature($params['account'], $params['desc'], $params['sum']);
 
         $response = $this->api('initPayment', $params);
-
         return $response['paymentId'];
+    }
+
+    /**
+     * Returns information about payment
+     *
+     * @param integer $id Payment ID
+     * @return PaymentInfo|null Information about payment or `null` if got an error
+     * @throws InvalidArgumentException If passed payment ID is invalid
+     * @throws ApiException If API response is invalid
+     */
+    public function getPayment(int $id): ?PaymentInfo
+    {
+        if ($id <= 0) {
+            throw new InvalidArgumentException('Payment ID must be greater than 0');
+        }
+
+        $params = [
+            'paymentId' => $id,
+            'secretKey' => $this->secretKey
+        ];
+
+        $response = $this->api('getPayment', $params);
+        return new PaymentInfo($response);
     }
 
     /**
@@ -321,10 +344,10 @@ class Unitpay
      *
      * @param string $method Method name
      * @param array $params Params
-     * @return ResponseInterface Response
+     * @return mixed Response
      * @throws ApiException If API response is invalid
      */
-    protected function api(string $method, array $params): ResponseInterface
+    protected function api(string $method, array $params)
     {
         if ($this->testMode) {
             $params['test'] = true;
@@ -337,7 +360,7 @@ class Unitpay
             'query' => compact('method', 'params')
         ]);
 
-        $content = $response->getContent(false);
+        $content = $response->toArray(false);
         if (isset($content['error'])) {
             if (!isset($content['error']['message'])) {
                 throw new ApiException('Unknown API error');
@@ -349,7 +372,7 @@ class Unitpay
             throw new ApiException('API response doesn\'t have field "result"');
         }
 
-        return $response;
+        return $content['result'];
     }
 
     /**
