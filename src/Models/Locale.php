@@ -33,8 +33,8 @@ class Locale
      * @var array
      */
     private static $handlers = [
-        static::ENGLISH => En::class,
-        static::RUSSIAN => Ru::class
+        self::ENGLISH => En::class,
+        self::RUSSIAN => Ru::class
     ];
 
     /**
