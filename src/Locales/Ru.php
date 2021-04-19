@@ -78,6 +78,12 @@ class Ru extends Locale implements LocaleInterface
                 Operator::MEGAFON => 'Мегафон',
                 Operator::BEELINE => 'Билайн',
                 Operator::TELE2 => 'Теле2'
+            ],
+            'response' => [
+                'success' => 'Запрос успешно обработан',
+                'error' => [
+                    'invalid_ip' => 'Некорректный IP'
+                ]
             ]
         ];
     }
