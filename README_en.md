@@ -19,4 +19,4 @@ composer require zkelo/unitpay-php-sdk
 
 ## Wiki
 
-Usage examples and methods description can be at [wiki](../../wiki).
+Usage examples and methods description can be found at [wiki](../../wiki).
