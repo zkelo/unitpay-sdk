@@ -9,7 +9,8 @@ use Symfony\Component\HttpClient\{
 };
 use zkelo\Unitpay\Exceptions\{
     ApiException,
-    InvalidConfigException
+    InvalidConfigException,
+    InvalidRequestIpException
 };
 use zkelo\Unitpay\Models\{
     Currency,
@@ -59,21 +60,33 @@ class Unitpay
     protected $projectId = 0;
 
     /**
+     * List of available Unitpay domains
+     *
+     * @var array
+     */
+    protected $availableDomains = [
+        'unitpay.ru',
+        'unitpay.money'
+    ];
+
+    /**
+     * Whitelist of IP addresses that are allowed to come requests from
+     *
+     * @var array
+     */
+    protected $ipWhitelist = [
+        '31.186.100.49',
+        '178.132.203.105',
+        '52.29.152.23',
+        '52.19.56.234'
+    ];
+
+    /**
      * Secret key
      *
      * @var string
      */
     private $secretKey = '';
-
-    /**
-     * List of available Unitpay domains
-     *
-     * @var array
-     */
-    private $availableDomains = [
-        'unitpay.ru',
-        'unitpay.money'
-    ];
 
     /**
      * Default payment method
@@ -337,6 +350,26 @@ class Unitpay
 
         $response = $this->api('getPayment', $params);
         return new PaymentInfo($response);
+    }
+
+    /**
+     * Handles incoming request from Unitpay
+     *
+     * @param string $ip
+     * @param array $data Request data
+     * @return array Response for request
+     */
+    public function handleRequest(string $ip, array $data): array
+    {
+        if (!in_array($ip, $this->ipWhitelist, true)) {
+            return [
+                'error' => $this->locale->message('response.error.invalid_ip')
+            ];
+        }
+        // TODO
+        return [
+            'result' => $this->locale->message('response.success')
+        ];
     }
 
     /**
