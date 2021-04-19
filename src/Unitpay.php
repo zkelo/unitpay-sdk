@@ -7,7 +7,6 @@ use Symfony\Component\HttpClient\{
     HttpClient,
     HttpClientInterface
 };
-use Symfony\Contracts\HttpClient\ResponseInterface;
 use zkelo\Unitpay\Exceptions\{
     ApiException,
     InvalidConfigException
@@ -234,6 +233,7 @@ class Unitpay
         }
         $params['currency'] = $currency;
 
+        $params['locale'] = $this->locale;
         if (!empty($locale)) {
             if (!Locale::isSupported($locale)) {
                 throw new InvalidArgumentException("Specified locale \"$locale\" is not supported");
