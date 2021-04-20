@@ -116,6 +116,16 @@ class Locale
     }
 
     /**
+     * Returns locale code on attempt to convert model to string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->code;
+    }
+
+    /**
      * Returns locale code
      *
      * @return string
