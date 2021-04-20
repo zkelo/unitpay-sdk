@@ -391,7 +391,7 @@ class Unitpay
      * @param boolean $success Reference to variable that will be used to store request handling status flag _(whether request is successful or not)_
      * @return array Response for request
      */
-    public function handleRequest(string $ip, array $data, bool &$success): array
+    public function handleRequest(string $ip, array $data, &$success): array
     {
         if (!in_array($ip, $this->ipWhitelist, true)) {
             $success = false;
