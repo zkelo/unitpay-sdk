@@ -82,7 +82,8 @@ class Ru extends Locale implements LocaleInterface
             'response' => [
                 'success' => 'Запрос успешно обработан',
                 'error' => [
-                    'invalid_ip' => 'Некорректный IP'
+                    'invalid_ip' => 'Некорректный IP',
+                    'bad_request' => 'Некорректный запрос'
                 ]
             ]
         ];
