@@ -9,8 +9,7 @@ use Symfony\Component\HttpClient\{
 };
 use zkelo\Unitpay\Exceptions\{
     ApiException,
-    InvalidConfigException,
-    InvalidRequestIpException
+    InvalidConfigException
 };
 use zkelo\Unitpay\Models\{
     Currency,
@@ -29,6 +28,26 @@ use zkelo\Unitpay\Models\{
  */
 class Unitpay
 {
+    /**
+     * Incoming request method: CHECK
+     */
+    const REQUEST_METHOD_CHECK = 'check';
+
+    /**
+     * Incoming request method: PAY
+     */
+    const REQUEST_METHOD_PAY = 'pay';
+
+    /**
+     * Incoming request method: PREAUTH
+     */
+    const REQUEST_METHOD_PREAUTH = 'preAuth';
+
+    /**
+     * Incoming request method: ERROR
+     */
+    const REQUEST_METHOD_ERROR = 'error';
+
     /**
      * Signature params delimiter
      */
@@ -79,6 +98,18 @@ class Unitpay
         '178.132.203.105',
         '52.29.152.23',
         '52.19.56.234'
+    ];
+
+    /**
+     * List of available incoming request methods
+     *
+     * @var array
+     */
+    protected $requestMethods = [
+        static::REQUEST_METHOD_CHECK,
+        static::REQUEST_METHOD_PAY,
+        static::REQUEST_METHOD_PREAUTH,
+        static::REQUEST_METHOD_ERROR
     ];
 
     /**
@@ -362,14 +393,36 @@ class Unitpay
     public function handleRequest(string $ip, array $data): array
     {
         if (!in_array($ip, $this->ipWhitelist, true)) {
-            return [
-                'error' => $this->locale->message('response.error.invalid_ip')
-            ];
+            return ['error' => $this->locale->message('response.error.invalid_ip')];
         }
-        // TODO
-        return [
-            'result' => $this->locale->message('response.success')
-        ];
+
+        if (empty($data['method']) || empty($data['params'])) {
+            return ['error' => $this->locale->message('response.error.bad_request')];
+        }
+
+        if (!$this->isRequestMethodSupported($data['method'])) {
+            return ['error' => $this->locale->message('response.error.bad_request')];
+        }
+
+        $params = &$data['params'];
+
+        $signature = $this->signature($params, $data['method']);
+        if ($signature !== $params['signature']) {
+            return ['error' => $this->locale->message('response.error.bad_request')];
+        }
+
+        return ['result' => $this->locale->message('response.success')];
+    }
+
+    /**
+     * Checks if incoming request method is supported
+     *
+     * @param string $method Method name
+     * @return boolean `true` if method supported of `false` if not
+     */
+    protected function isRequestMethodSupported(string $method): bool
+    {
+        return in_array($method, $this->requestMethods);
     }
 
     /**
