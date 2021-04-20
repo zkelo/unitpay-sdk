@@ -388,19 +388,23 @@ class Unitpay
      *
      * @param string $ip
      * @param array $data Request data
+     * @param boolean $success Reference to variable that will be used to store request handling status flag _(whether request is successful or not)_
      * @return array Response for request
      */
-    public function handleRequest(string $ip, array $data): array
+    public function handleRequest(string $ip, array $data, bool &$success): array
     {
         if (!in_array($ip, $this->ipWhitelist, true)) {
+            $success = false;
             return ['error' => $this->locale->message('response.error.invalid_ip')];
         }
 
         if (empty($data['method']) || empty($data['params'])) {
+            $success = false;
             return ['error' => $this->locale->message('response.error.bad_request')];
         }
 
         if (!$this->isRequestMethodSupported($data['method'])) {
+            $success = false;
             return ['error' => $this->locale->message('response.error.bad_request')];
         }
 
@@ -408,9 +412,11 @@ class Unitpay
 
         $signature = $this->signature($params, $data['method']);
         if ($signature !== $params['signature']) {
+            $success = false;
             return ['error' => $this->locale->message('response.error.bad_request')];
         }
 
+        $success = true;
         return ['result' => $this->locale->message('response.success')];
     }
 
