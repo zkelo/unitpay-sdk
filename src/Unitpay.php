@@ -274,10 +274,9 @@ class Unitpay
             if (!Currency::isSupported($currency)) {
                 throw new InvalidArgumentException("Specified currency \"$currency\" is not supported");
             }
+            $params['currency'] = $currency;
         }
-        $params['currency'] = $currency;
 
-        $params['locale'] = $this->locale;
         if (!empty($locale)) {
             if (!Locale::isSupported($locale)) {
                 throw new InvalidArgumentException("Specified locale \"$locale\" is not supported");
@@ -289,7 +288,12 @@ class Unitpay
             $params['backUrl'] = $backUrl;
         }
 
-        $params['signature'] = $this->signature($params);
+        $params['signature'] = $this->signature([
+            $params['account'],
+            $params['currency'] ?? null,
+            $params['desc'],
+            $params['sum']
+        ]);
 
         if ($this->testMode) {
             $params['test'] = true;
