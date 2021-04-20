@@ -258,7 +258,7 @@ class Unitpay
             $params['backUrl'] = $backUrl;
         }
 
-        $params['signature'] = $this->signature($params['account'], $params['desc'], $params['sum'], $params['currency']);
+        $params['signature'] = $this->signature($params);
 
         if ($this->testMode) {
             $params['test'] = true;
@@ -323,7 +323,7 @@ class Unitpay
         }
 
         $params['secretKey'] = $this->secretKey;
-        $params['signature'] = $this->signature($params['account'], $params['desc'], $params['sum']);
+        $params['signature'] = $this->signature($params);
 
         $response = $this->api('initPayment', $params);
         return $response['paymentId'];
@@ -411,19 +411,21 @@ class Unitpay
     /**
      * Calculates request signature
      *
-     * @param string $account Account ID
-     * @param string $description Order description
-     * @param float $sum Amount
-     * @param string|null $currency Currency
+     * @param array $params Parameters
+     * @param string|null $method Reuqest method name _(only when validating request signature)_
      * @return string Signature
      */
-    protected function signature(string $account, string $description, float $sum, ?string $currency = null): string
+    protected function signature(array $params, ?string $method = null): string
     {
-        $params = compact('account', 'currency', 'description', 'sum');
-        $params[] = $this->secretKey;
-        $params = array_filter($params);
-        $params = implode(self::SIGNATURE_DELIMITER, $params);
+        ksort($params);
+        unset($params['sign'], $params['signature']);
 
+        $params[] = $this->secretKey;
+        if ($method) {
+            array_unshift($params, $method);
+        }
+
+        $params = implode(static::SIGNATURE_DELIMITER, $params);
         return hash('sha256', $params);
     }
 
