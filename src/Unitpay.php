@@ -106,10 +106,10 @@ class Unitpay
      * @var array
      */
     protected $requestMethods = [
-        static::REQUEST_METHOD_CHECK,
-        static::REQUEST_METHOD_PAY,
-        static::REQUEST_METHOD_PREAUTH,
-        static::REQUEST_METHOD_ERROR
+        self::REQUEST_METHOD_CHECK,
+        self::REQUEST_METHOD_PAY,
+        self::REQUEST_METHOD_PREAUTH,
+        self::REQUEST_METHOD_ERROR
     ];
 
     /**
