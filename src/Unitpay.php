@@ -409,12 +409,12 @@ class Unitpay
 
         if (empty($data['method']) || empty($data['params'])) {
             $success = false;
-            return ['error' => $this->locale->message('response.error.bad_request')];
+            return ['error' => $this->locale->message('response.error.missing_params')];
         }
 
         if (!$this->isRequestMethodSupported($data['method'])) {
             $success = false;
-            return ['error' => $this->locale->message('response.error.bad_request')];
+            return ['error' => $this->locale->message('response.error.unsupported_method')];
         }
 
         $params = &$data['params'];
@@ -422,7 +422,7 @@ class Unitpay
         $signature = $this->signature($params, $data['method']);
         if ($signature !== $params['signature']) {
             $success = false;
-            return ['error' => $this->locale->message('response.error.bad_request')];
+            return ['error' => $this->locale->message('response.error.invalid_signature')];
         }
 
         $success = true;

@@ -83,7 +83,9 @@ class Ru extends Locale implements LocaleInterface
                 'success' => 'Запрос успешно обработан',
                 'error' => [
                     'invalid_ip' => 'Некорректный IP',
-                    'bad_request' => 'Некорректный запрос'
+                    'missing_params' => 'В запросе отсутствуют необходимые параметры',
+                    'unsupported_method' => 'Неподдерживаемый метод запроса',
+                    'invalid_signature' => 'Неверная подпись'
                 ]
             ]
         ];
