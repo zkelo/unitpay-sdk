@@ -289,10 +289,10 @@ class Unitpay
         }
 
         $params['signature'] = $this->signature([
-            $params['account'],
-            $params['currency'] ?? null,
-            $params['desc'],
-            $params['sum']
+            'account' => $params['account'],
+            'currency' => $params['currency'] ?? null,
+            'desc' => $params['desc'],
+            'sum' => $params['sum']
         ]);
 
         if ($this->testMode) {
