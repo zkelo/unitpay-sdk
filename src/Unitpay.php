@@ -440,7 +440,7 @@ class Unitpay
     {
         ksort($params);
         unset($params['sign'], $params['signature']);
-        array_filter($params, function ($value) {
+        $params = array_filter($params, function ($value) {
             return !is_null($value);
         });
 
