@@ -441,7 +441,7 @@ class Unitpay
         ksort($params);
         unset($params['sign'], $params['signature']);
         $params = array_filter($params, function ($value) {
-            return !is_null($value);
+            return isset($value);
         });
 
         $params[] = $this->secretKey;
