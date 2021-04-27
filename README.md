@@ -4,6 +4,8 @@
 
 This SDK allows you to work with Unitpay payment system on PHP.
 
+# Manual
+
 ## Requirements
 
 - PHP 7.1 or newer;
@@ -112,3 +114,22 @@ $ip = '127.0.0.1';
 // Creating payment
 $paymentId = $sdk->initPayment('card', $orderId, $amount, $description, $ip);
 ```
+
+### Retrieving information about payment
+
+To retrieve payment information you should use `getPayment()` method that returns information in comfortable way using model.
+
+```php
+// Payment ID in Unitpay (not order ID in your app or something else!)
+$paymentId = 7777777777;
+
+// Retrieving information
+$paymentInfo = $sdk->getPayment();
+
+// Display order amount and currency
+echo "Order amount: $paymentInfo->orderSum (currency: $paymentInfo->orderCurrency)", PHP_EOL;
+```
+
+# Reference
+
+*ToDo...*
