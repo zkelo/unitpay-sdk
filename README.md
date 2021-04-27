@@ -1,7 +1,5 @@
 # Unitpay PHP SDK
 
-> Language: [Русский](README_ru.md) | English
-
 This SDK allows you to work with Unitpay payment system on PHP.
 
 # Manual
