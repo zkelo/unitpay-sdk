@@ -14,9 +14,5 @@
 Просто выполните следующую команду:
 
 ```
-composer require zkelo/unitpay-php-sdk
+composer require zkelo/unitpay-sdk
 ```
-
-## Справочник
-
-Примеры использования, а также описание методов SDK вы можете найти в [справочнике](../../wiki).

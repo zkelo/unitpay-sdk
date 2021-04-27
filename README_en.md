@@ -14,9 +14,5 @@ This SDK allows you to work with Unitpay payment system on PHP.
 Just execute this command:
 
 ```
-composer require zkelo/unitpay-php-sdk
+composer require zkelo/unitpay-sdk
 ```
-
-## Wiki
-
-Usage examples and methods description can be found at [wiki](../../wiki).
