@@ -122,7 +122,7 @@ To retrieve payment information you should use `getPayment()` method that return
 $paymentId = 7777777777;
 
 // Retrieving information
-$paymentInfo = $sdk->getPayment();
+$paymentInfo = $sdk->getPayment($paymentId);
 
 // Display order amount and currency
 echo "Order amount: $paymentInfo->orderSum (currency: $paymentInfo->orderCurrency)", PHP_EOL;
