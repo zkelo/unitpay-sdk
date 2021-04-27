@@ -1,17 +1,17 @@
 # Unitpay PHP SDK
 
-> Language: Русский | [English](README_en.md)
+> Language: [Русский](README.md) | English
 
-Данное SDK позволяет работать с платёжной системой Unitpay на PHP.
+This SDK allows you to work with Unitpay payment system on PHP.
 
-## Требования
+## Requirements
 
-- PHP 7.1 или новее;
+- PHP 7.1 or newer;
 - Composer.
 
-## Установка
+## Install
 
-Просто выполните следующую команду:
+Just execute this command:
 
 ```
 composer require zkelo/unitpay-sdk
