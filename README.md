@@ -113,6 +113,8 @@ $ip = '127.0.0.1';
 $paymentId = $sdk->initPayment('card', $orderId, $amount, $description, $ip);
 ```
 
+> **ToDo.** Excerpt about models.
+
 ### Retrieving information about payment
 
 To retrieve payment information you should use `getPayment()` method that returns information in comfortable way using model.
@@ -130,4 +132,20 @@ echo "Order amount: $paymentInfo->orderSum (currency: $paymentInfo->orderCurrenc
 
 # Reference
 
-*ToDo...*
+*This section will be written soon.*
+
+## Exceptions
+
+**ToDo.**
+
+## Interfaces
+
+**ToDo.**
+
+## Locales
+
+**ToDo.**
+
+## Models
+
+**ToDo.**
