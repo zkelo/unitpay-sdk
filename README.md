@@ -83,9 +83,9 @@ As you can see in example above we passed `$success` variable as third argument 
 $response = $sdk->handleRequest($remoteIp, $requestData, $success);
 
 if ($success) {
-    echo 'Request is success', PHP_EOL;
+    // Do something on success request
 } else {
-    echo 'Bad request', PHP_EOL;
+    // Do something on bad request
 }
 
 // Returning response
