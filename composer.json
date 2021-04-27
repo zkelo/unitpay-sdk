@@ -1,6 +1,6 @@
 {
-    "name": "zkelo/unitpay-php-sdk",
-    "description": "Unitpay PHP SDK",
+    "name": "zkelo/unitpay-sdk",
+    "description": "Unitpay SDK",
     "keywords": [
         "unitpay",
         "php",
