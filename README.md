@@ -29,7 +29,7 @@ $sdk = new Unitpay($secretKey, $publicKey);
 
 ```
 
-## Usage
+## Quick start
 
 ### Creating payment form link
 
@@ -130,22 +130,36 @@ $paymentInfo = $sdk->getPayment($paymentId);
 echo "Order amount: $paymentInfo->orderSum (currency: $paymentInfo->orderCurrency)", PHP_EOL;
 ```
 
+### Localization
+
+- *ToDo.*
+
 # Reference
 
 *This section will be written soon.*
 
 ## Exceptions
 
-**ToDo.**
+- *ToDo.*
 
 ## Interfaces
 
-**ToDo.**
+- *ToDo.*
+
+## Available methods
+
+- *ToDo.*
 
 ## Locales
 
-**ToDo.**
+- *ToDo.*
 
 ## Models
 
-**ToDo.**
+- *ToDo.*
+
+# Extending
+
+## Localization
+
+- *ToDo.*
