@@ -1,6 +1,6 @@
 # Unitpay PHP SDK
 
-> Language: Русский | [English](README_en.md)
+> Language: Русский | [English](README.md)
 
 Данное SDK позволяет работать с платёжной системой Unitpay на PHP.
 
