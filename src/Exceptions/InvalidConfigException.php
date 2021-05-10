@@ -2,8 +2,6 @@
 
 namespace zkelo\Unitpay\Exceptions;
 
-use Exception;
-
 /**
  * Exception that represents an invalid configuration param value
  *

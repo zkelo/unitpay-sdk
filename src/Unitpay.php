@@ -3,12 +3,9 @@
 namespace zkelo\Unitpay;
 
 use InvalidArgumentException;
-use Symfony\Component\HttpClient\{
-    HttpClient,
-    HttpClientInterface
-};
 use zkelo\Unitpay\Exceptions\{
     ApiException,
+    CurlException,
     InvalidConfigException
 };
 use zkelo\Unitpay\Models\{
@@ -148,13 +145,6 @@ class Unitpay
     private $testMode = false;
 
     /**
-     * HTTP client that will be used to make requests
-     *
-     * @var HttpClientInterface
-     */
-    private $client;
-
-    /**
      * Constructs a new SDK instance
      *
      * @param string $secretKey Secret key
@@ -188,7 +178,6 @@ class Unitpay
         }
         $this->projectId = intval($this->projectId);
 
-        $this->client = HttpClient::create();
         $this->setDefaultLocale(Locale::ENGLISH);
     }
 
@@ -470,6 +459,7 @@ class Unitpay
      * @param string $method Method name
      * @param array $params Params
      * @return mixed Response
+     * @throws CurlException On cURL exception
      * @throws ApiException If API response is invalid
      */
     protected function api(string $method, array $params)
@@ -481,14 +471,37 @@ class Unitpay
         $url = $this->baseUrl();
         $url .= '/api';
 
-        $response = $this->client->request('GET', $url, [
-            'query' => compact('method', 'params')
-        ]);
+        $url .= '?' . http_build_query(compact('method', 'params'));
 
-        $content = $response->toArray(false);
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_HTTPHEADER => [
+                'Accept: application/json',
+                'Content-Type: application/json'
+            ],
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS => 3,
+            CURLOPT_RETURNTRANSFER => true
+        ]);
+        $response = curl_exec($ch);
+
+        $errno = curl_errno($ch);
+        if ($errno) {
+            $error = curl_error($ch);
+
+            throw new CurlException($error, $errno);
+        }
+        curl_close($ch);
+
+        $content = json_decode($response, true);
+        if (is_null($content)) {
+            throw new ApiException('Bad response');
+        }
+
         if (isset($content['error'])) {
             if (!isset($content['error']['message'])) {
-                throw new ApiException('Unknown API error');
+                throw new ApiException('Unknown error');
             }
             throw new ApiException($content['error']['message']);
         }
