@@ -1,6 +1,9 @@
 # Unitpay PHP SDK
 
-[![CodeFactor](https://www.codefactor.io/repository/github/zkelo/unitpay-sdk/badge)](https://www.codefactor.io/repository/github/zkelo/unitpay-sdk)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/zkelo/unitpay-sdk)
+![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/zkelo/unitpay-sdk)
+![Packagist Downloads](https://img.shields.io/packagist/dt/zkelo/unitpay-sdk)
+![Packagist License](https://img.shields.io/packagist/l/zkelo/unitpay-sdk)
 
 This SDK allows you to work with Unitpay payment system on PHP.
 
