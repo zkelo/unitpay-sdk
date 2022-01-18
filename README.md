@@ -118,14 +118,14 @@ $ip = '127.0.0.1';
 $paymentId = $sdk->initPayment('card', $orderId, $amount, $description, $ip);
 ```
 
-> **ToDo.** Excerpt about models.
+> In example above payment method written as is, e.g. "raw". But instead of writing payment method by hand you can use constants from models. Please refer to [models](#models) section for more information.
 
 ### Retrieving information about payment
 
 To retrieve payment information you should use `getPayment()` method that returns information in comfortable way using model.
 
 ```php
-// Payment ID in Unitpay (not order ID in your app or something else!)
+// Payment ID in Unitpay (this is not order ID in your app or something else!)
 $paymentId = 7777777777;
 
 // Retrieving information
@@ -167,4 +167,63 @@ echo "Order amount: $paymentInfo->orderSum (currency: $paymentInfo->orderCurrenc
 
 ## Localization
 
-- *ToDo.*
+If you need to translate currency names, payment methods or response messages to your language you can do it simply by making new locale class which extending base abstract `Locale` class.
+
+Example below shows how looks locale class.
+
+```php
+
+namespace App\Locales;
+
+/**
+ * My own locale
+ */
+class MyLocale extends Locale implements LocaleInterface
+{
+    /**
+     * {@inheritDoc}
+     */
+    public static function messages(): array
+    {
+        return [
+            // Write translations here.
+            //
+            // For example, if you want to translate some currencies names,
+            // you just need to specify all its messages inside `currency` property
+            // which will be array which has currencies IDs as keys
+            // and translation messages for each of them as values.
+            'currency' => [
+                // Don't use raw names of currencies,
+                // payment methods and etc. in your
+                // locale class like here:
+                //
+                'RUB' => 'Russian rouble', // <-- This is wrong!
+                // Instead of using RAWs
+                // you should use model
+                // constants like here:
+                //
+                Currency::RUB => 'Russian rouble' // <-- This is right!
+            ]
+        ];
+    }
+}
+```
+
+Now, when you have class for your locale, you need to make it available for usage by adding it to `Locale` model by `Locale::use()` method.
+
+```php
+use zkelo\Unitpay\Models\Locale;
+
+// In this example `en_GB` is name of your locale
+Locale::use('en_GB', App\Locales\MyLocale::class);
+```
+
+After adding locale you can use it in SDK. You can set it as default or just specify it in places where needed.
+
+```php
+// Specifying locale as default for SDK
+$sdk->setDefaultLocale('en_GB');
+
+// Or... specifying locale in "real-time"
+$sdk->form(10, 6, 'Test payment', zkelo\Unitpay\Models\Payment::METHOD_CARD, zkelo\Unitpay\Models\Currency::RUB, 'en_GB');
+```
